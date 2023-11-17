@@ -2,7 +2,9 @@ package AlaaElmeleh.U2W3D5.services;
 
 import AlaaElmeleh.U2W3D5.entities.Event;
 import AlaaElmeleh.U2W3D5.entities.User;
+import AlaaElmeleh.U2W3D5.entities.UserEvent;
 import AlaaElmeleh.U2W3D5.exceptions.NotFoundException;
+import AlaaElmeleh.U2W3D5.exceptions.PostiUnavailableException;
 import AlaaElmeleh.U2W3D5.payload.entity.NewEventDTO;
 import AlaaElmeleh.U2W3D5.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,19 @@ public class EventService {
     public void findByIdAndDelete(long id) throws NotFoundException {
         Event found = this.findById(id);
         eventRepository.delete(found);
+    }
+
+    public void prenotaPosto(long eventId, User user, long numberOfPosti) throws NotFoundException, PostiUnavailableException {
+        Event event = findById(eventId);
+        if (event.getPlacesAvailable() >= numberOfPosti) {
+            event.setPlacesAvailable(event.getPlacesAvailable() - numberOfPosti);
+            UserEvent userEvent = new UserEvent();
+            userEvent.setUser(user);
+            userEvent.setEvent(event);
+            eventRepository.save(event);
+        } else {
+            throw new PostiUnavailableException("Posti non disponibili per l'evento con id: " + eventId);
+        }
     }
 
 

@@ -51,4 +51,14 @@ public class EventController {
     public void findByIdAndDelete(@PathVariable long id) {
         eventService.findByIdAndDelete(id);
     }
+
+    @PostMapping("/{id}/prenota")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void prenotaPosto(
+            @PathVariable long id,
+            @RequestParam long numeroPosti,
+            Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        eventService.prenotaPosto(id, user, numeroPosti);
+    }
 }
