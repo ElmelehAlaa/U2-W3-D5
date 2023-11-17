@@ -13,6 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/events")
@@ -56,9 +59,15 @@ public class EventController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void prenotaPosto(
             @PathVariable long id,
-            @RequestParam long numeroPosti,
+            @RequestParam long numberOfPosti,
             Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        eventService.prenotaPosto(id, user, numeroPosti);
+        eventService.prenotaPosto(id, user, numberOfPosti);
+    }
+
+    @PatchMapping("/{id}/image")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
+    public Event uploadImage(@RequestParam("image") MultipartFile file, @PathVariable long id) throws IOException {
+        return eventService.uploadPicture(file, id);
     }
 }

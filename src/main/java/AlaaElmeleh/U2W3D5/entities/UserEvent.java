@@ -3,6 +3,9 @@ package AlaaElmeleh.U2W3D5.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 @Entity
 @Getter
@@ -19,4 +22,10 @@ public class UserEvent {
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
+
+    private long numberOfPosti;
+
+    @CreationTimestamp
+    private Date createdAt;
+
 }

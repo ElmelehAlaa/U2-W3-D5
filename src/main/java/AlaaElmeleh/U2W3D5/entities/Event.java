@@ -19,6 +19,7 @@ public class Event {
     private String description;
     private String place;
     private long placesAvailable;
+    private String imageUrl;
     private Date date;
 
     @ManyToOne
