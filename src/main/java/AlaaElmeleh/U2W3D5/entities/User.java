@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "users")
-@JsonIgnoreProperties({"password","authorities","enabled","credentialsNonExpired","accountNonExpired","accountNonLocked"})
+@JsonIgnoreProperties({"password", "authorities", "enabled", "credentialsNonExpired", "accountNonExpired", "accountNonLocked"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,6 @@ public class User implements UserDetails {
     private String nome;
     private String cognome;
     private String email;
-    private String avatarUrl;
     @Enumerated(EnumType.STRING)
     private Role role;
     private String password;
