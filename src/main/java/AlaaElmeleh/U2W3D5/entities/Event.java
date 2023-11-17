@@ -1,5 +1,6 @@
 package AlaaElmeleh.U2W3D5.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,8 @@ public class Event {
     @JoinColumn(name = "organizer_id")
     private User organizer;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<UserEvent> userEvents;
 
 }

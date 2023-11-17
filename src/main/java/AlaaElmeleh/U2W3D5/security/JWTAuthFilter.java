@@ -32,16 +32,11 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             throw new UnauthorizedException("Per favore passa il Bearer Token nell'Authorization header");
         } else {
             String token = authHeader.substring(7);
-            System.out.println("Token ->" + token);
-
             jwtTools.verifyToken(token);
-
             String id = jwtTools.extractIdFromToken(token);
             User currentUtente = userService.findById(Long.parseLong(id));
-
             Authentication authentication = new UsernamePasswordAuthenticationToken(currentUtente, null, currentUtente.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
             filterChain.doFilter(request, response);
 
         }

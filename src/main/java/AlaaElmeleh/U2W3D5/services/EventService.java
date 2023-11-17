@@ -52,13 +52,13 @@ public class EventService {
         return eventRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
-    public Event findByIdAndUpdate(long id, Event body) throws NotFoundException {
+    public Event findByIdAndUpdate(long id, NewEventDTO body) throws NotFoundException {
         Event found = this.findById(id);
-        found.setDate(body.getDate());
-        found.setDescription(body.getDescription());
-        found.setPlace(body.getPlace());
-        found.setTitle(body.getTitle());
-        found.setPlacesAvailable(body.getPlacesAvailable());
+        found.setDate(body.date());
+        found.setDescription(body.description());
+        found.setPlace(body.place());
+        found.setTitle(body.titolo());
+        found.setPlacesAvailable(body.placesAvailable());
         return eventRepository.save(found);
     }
 

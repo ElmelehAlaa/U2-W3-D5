@@ -19,7 +19,7 @@ public class JWTTools {
                 .setIssuedAt(new Date(System.currentTimeMillis()))//
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes())).compact();
-    }//LOGIN
+    }
 
     public void verifyToken(String token) {
         try {

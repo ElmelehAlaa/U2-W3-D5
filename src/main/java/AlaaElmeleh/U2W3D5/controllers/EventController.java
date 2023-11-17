@@ -70,4 +70,14 @@ public class EventController {
     public Event uploadImage(@RequestParam("image") MultipartFile file, @PathVariable long id) throws IOException {
         return eventService.uploadPicture(file, id);
     }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
+    public Event findByIdAndUpdate(@PathVariable long id, @RequestBody @Validated NewEventDTO body, BindingResult validation) {
+        if (validation.hasErrors()) {
+            throw new BadRequestException(validation.getAllErrors());
+        } else {
+            return eventService.findByIdAndUpdate(id, body);
+        }
+    }
 }
