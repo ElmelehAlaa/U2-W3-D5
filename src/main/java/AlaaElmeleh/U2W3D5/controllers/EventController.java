@@ -1,6 +1,7 @@
 package AlaaElmeleh.U2W3D5.controllers;
 
 import AlaaElmeleh.U2W3D5.entities.Event;
+import AlaaElmeleh.U2W3D5.entities.User;
 import AlaaElmeleh.U2W3D5.exceptions.BadRequestException;
 import AlaaElmeleh.U2W3D5.payload.entity.NewEventDTO;
 import AlaaElmeleh.U2W3D5.services.EventService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,11 +30,13 @@ public class EventController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('ORGANIZER')")
-    public Event saveDispositivo(@RequestBody @Validated NewEventDTO body, BindingResult validation) {
+    public Event saveEvent(@RequestBody @Validated NewEventDTO body, BindingResult validation, Authentication authentication) {
+
         if (validation.hasErrors()) {
             throw new BadRequestException(validation.getAllErrors());
         } else {
-            return eventService.save(body);
+            User organizer = (User) authentication.getPrincipal();
+            return eventService.save(body, organizer);
         }
     }
 

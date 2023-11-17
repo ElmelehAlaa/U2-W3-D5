@@ -1,6 +1,7 @@
 package AlaaElmeleh.U2W3D5.services;
 
 import AlaaElmeleh.U2W3D5.entities.Event;
+import AlaaElmeleh.U2W3D5.entities.User;
 import AlaaElmeleh.U2W3D5.exceptions.NotFoundException;
 import AlaaElmeleh.U2W3D5.payload.entity.NewEventDTO;
 import AlaaElmeleh.U2W3D5.repositories.EventRepository;
@@ -16,14 +17,14 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
 
-    public Event save(NewEventDTO body) {
+    public Event save(NewEventDTO body, User organizer) {
         Event newEvent = new Event();
         newEvent.setPlacesAvailable(body.placesAvailable());
         newEvent.setDate(body.date());
         newEvent.setTitle(body.titolo());
         newEvent.setPlace(body.place());
         newEvent.setDescription(body.description());
-        newEvent.setOrganizer(body.organizer());
+        newEvent.setOrganizer(organizer);
         return eventRepository.save(newEvent);
     }
 

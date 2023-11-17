@@ -1,5 +1,6 @@
 package AlaaElmeleh.U2W3D5.services;
 
+import AlaaElmeleh.U2W3D5.Enum.Role;
 import AlaaElmeleh.U2W3D5.entities.User;
 import AlaaElmeleh.U2W3D5.exceptions.BadRequestException;
 import AlaaElmeleh.U2W3D5.exceptions.UnauthorizedException;
@@ -45,6 +46,7 @@ public class AuthService {
         newUser.setCognome(body.surname());
         newUser.setUsername(body.username());
         newUser.setPassword(bcrypt.encode(body.password()));
+        newUser.setRole(Role.USER);
         return userRepository.save(newUser);
     }
 
