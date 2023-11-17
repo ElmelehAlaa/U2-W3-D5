@@ -1,8 +1,8 @@
 package AlaaElmeleh.U2W3D5.services;
 
 import AlaaElmeleh.U2W3D5.entities.User;
+import AlaaElmeleh.U2W3D5.exceptions.NotFoundException;
 import AlaaElmeleh.U2W3D5.repositories.UserRepository;
-import com.cloudinary.Cloudinary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 public User findByEmail(String email){
-        return userRepository.findByEmail(email).orElseThrow(()-> new ChangeSetPersister.NotFoundException("utente con email" + email + "non trovato"));
+        return userRepository.findByEmail(email).orElseThrow(()-> new NotFoundException("utente con email" + email + "non trovato"));
 }
 
 
